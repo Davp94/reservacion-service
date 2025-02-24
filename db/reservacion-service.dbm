@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.0.4" use-changelog="false" last-position="0,0" last-zoom="1" max-obj-count="6"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="administracion" layers="0" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="usuario" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="administracion"/>
+	<role name="postgres"/>
+	<position x="180" y="100"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+		<comment> <![CDATA[identificador de usuario de base de datos]]> </comment>
+	</column>
+	<column name="nombres">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="apellidos">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="username">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="password">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="correo">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="estado">
+		<type name="smallint" length="0"/>
+		<comment> <![CDATA[0(inactivo), 1(activo)]]> </comment>
+	</column>
+	<column name="rol_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="usuario_pk" type="pk-constr" table="administracion.usuario">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="rol" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="administracion"/>
+	<role name="postgres"/>
+	<position x="440" y="100"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nombre">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="descripcion">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="estado">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="rol_pk" type="pk-constr" table="administracion.rol">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Empresa" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="administracion"/>
+	<role name="postgres"/>
+	<position x="180" y="540"/>
+	<column name="id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nombre">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="codigo_registro">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="razon_social">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nit">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="usuario_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="logo">
+		<type name="varchar" length="0"/>
+	</column>
+</table>
+
+<table name="horario" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="administracion"/>
+	<role name="postgres"/>
+	<position x="600" y="540"/>
+	<column name="id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="fecha">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="hora_inicio">
+		<type name="time" length="0"/>
+	</column>
+	<column name="hora_fin">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="estado">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="empresa_id">
+		<type name="smallint" length="0"/>
+	</column>
+</table>
+
+<table name="reservacion" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="administracion"/>
+	<role name="postgres"/>
+	<position x="380" y="360"/>
+	<column name="id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="usuario_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="horario_id">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="comentario">
+		<type name="varchar" length="0"/>
+	</column>
+</table>
+
+<constraint name="rol__id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="administracion.rol" table="administracion.usuario">
+	<columns names="rol_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="usuario_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="administracion.usuario" table="administracion.&quot;Empresa&quot;">
+	<columns names="usuario_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="empresa_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="administracion.&quot;Empresa&quot;" table="administracion.horario">
+	<columns names="empresa_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="horario_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="administracion.horario" table="administracion.reservacion">
+	<columns names="horario_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="usuario_id_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="administracion.usuario" table="administracion.reservacion">
+	<columns names="usuario_id" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_usuario_rol" type="relfk" layers="0"
+	 custom-color="#550000"
+	 src-table="administracion.usuario"
+	 dst-table="administracion.rol" reference-fk="rol__id_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Empresa_usuario&quot;" type="relfk" layers="0"
+	 custom-color="#550000"
+	 src-table="administracion.&quot;Empresa&quot;"
+	 dst-table="administracion.usuario" reference-fk="usuario_id_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_horario_Empresa&quot;" type="relfk" layers="0"
+	 custom-color="#550000"
+	 src-table="administracion.horario"
+	 dst-table="administracion.&quot;Empresa&quot;" reference-fk="empresa_id_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_reservacion_horario" type="relfk" layers="0"
+	 custom-color="#550000"
+	 src-table="administracion.reservacion"
+	 dst-table="administracion.horario" reference-fk="horario_id_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_reservacion_usuario" type="relfk" layers="0"
+	 custom-color="#550000"
+	 src-table="administracion.reservacion"
+	 dst-table="administracion.usuario" reference-fk="usuario_id_fk"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+</dbmodel>

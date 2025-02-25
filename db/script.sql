@@ -57,32 +57,32 @@ CREATE TABLE administracion.rol (
 ALTER TABLE administracion.rol OWNER TO postgres;
 -- ddl-end --
 
--- object: administracion."Empresa" | type: TABLE --
--- DROP TABLE IF EXISTS administracion."Empresa" CASCADE;
-CREATE TABLE administracion."Empresa" (
-	id smallint,
+-- object: administracion.empresa | type: TABLE --
+-- DROP TABLE IF EXISTS administracion.empresa CASCADE;
+CREATE TABLE administracion.empresa (
+	id smallint NOT NULL,
 	nombre smallint,
 	codigo_registro smallint,
 	razon_social smallint,
 	nit smallint,
 	usuario_id smallint,
-	logo varchar
-
+	logo varchar,
+	CONSTRAINT empresa_pk PRIMARY KEY (id)
 );
 -- ddl-end --
-ALTER TABLE administracion."Empresa" OWNER TO postgres;
+ALTER TABLE administracion.empresa OWNER TO postgres;
 -- ddl-end --
 
 -- object: administracion.horario | type: TABLE --
 -- DROP TABLE IF EXISTS administracion.horario CASCADE;
 CREATE TABLE administracion.horario (
-	id smallint,
+	id smallint NOT NULL,
 	fecha timestamp,
 	hora_inicio time,
 	hora_fin smallint,
 	estado smallint,
-	empresa_id smallint
-
+	empresa_id smallint,
+	CONSTRAINT horario_pk PRIMARY KEY (id)
 );
 -- ddl-end --
 ALTER TABLE administracion.horario OWNER TO postgres;
@@ -91,11 +91,11 @@ ALTER TABLE administracion.horario OWNER TO postgres;
 -- object: administracion.reservacion | type: TABLE --
 -- DROP TABLE IF EXISTS administracion.reservacion CASCADE;
 CREATE TABLE administracion.reservacion (
-	id smallint,
+	id smallint NOT NULL,
 	usuario_id smallint,
 	horario_id smallint,
-	comentario varchar
-
+	comentario varchar,
+	CONSTRAINT reservacion_pk PRIMARY KEY (id)
 );
 -- ddl-end --
 ALTER TABLE administracion.reservacion OWNER TO postgres;
@@ -109,8 +109,8 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 -- object: usuario_id_fk | type: CONSTRAINT --
--- ALTER TABLE administracion."Empresa" DROP CONSTRAINT IF EXISTS usuario_id_fk CASCADE;
-ALTER TABLE administracion."Empresa" ADD CONSTRAINT usuario_id_fk FOREIGN KEY (usuario_id)
+-- ALTER TABLE administracion.empresa DROP CONSTRAINT IF EXISTS usuario_id_fk CASCADE;
+ALTER TABLE administracion.empresa ADD CONSTRAINT usuario_id_fk FOREIGN KEY (usuario_id)
 REFERENCES administracion.usuario (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
@@ -118,7 +118,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- object: empresa_id_fk | type: CONSTRAINT --
 -- ALTER TABLE administracion.horario DROP CONSTRAINT IF EXISTS empresa_id_fk CASCADE;
 ALTER TABLE administracion.horario ADD CONSTRAINT empresa_id_fk FOREIGN KEY (empresa_id)
-REFERENCES administracion."Empresa" (id) MATCH SIMPLE
+REFERENCES administracion.empresa (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 

@@ -1,3 +1,4 @@
+import { entities } from 'src/entity';
 import { DataSource } from 'typeorm';
 
 export const databaseConfig = [
@@ -10,10 +11,8 @@ export const databaseConfig = [
         port: 5432,
         username: 'postgres',
         password: '123456',
-        database: 'reservacion_df_db',
-        entities: [
-            __dirname + '/../**/*.entity{.ts,.js}',
-        ],
+        database: 'reservacion2_db',
+        entities: entities,
         synchronize: true,
       });
 

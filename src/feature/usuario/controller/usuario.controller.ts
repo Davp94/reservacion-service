@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UsuarioService } from '../service/usuario.service';
 import { Usuario } from 'src/entity/usuario.entity';
 import { Repository } from 'typeorm';
+import { UsuarioRequestDto } from '../dto/request/usuario.request.dto';
 
 @Controller('usuario')
 export class UsuarioController {
@@ -20,13 +21,13 @@ export class UsuarioController {
     }
 
     @Post()
-    async createUsuario(@Body() usuario: Usuario) {
+    async createUsuario(@Body() usuario: UsuarioRequestDto) {
         return await this.usuarioService.createUsuario(usuario);
     }
 
-    @Put()
-    async updateUsuario(usuario: Usuario) {
-        return await this.usuarioService.updateUsuario(usuario);
+    @Put(':id')
+    async updateUsuario(@Param('id') id: number, @Body() usuario: UsuarioRequestDto) {
+        return await this.usuarioService.updateUsuario(id, usuario);
     }
 
     @Delete(':id')

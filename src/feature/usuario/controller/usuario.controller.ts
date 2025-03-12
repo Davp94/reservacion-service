@@ -3,6 +3,7 @@ import { UsuarioService } from '../service/usuario.service';
 import { Usuario } from 'src/entity/usuario.entity';
 import { Repository } from 'typeorm';
 import { UsuarioRequestDto } from '../dto/request/usuario.request.dto';
+import { UsuarioResponseDto } from '../dto/response/usuario.response.dto';
 
 @Controller('usuario')
 export class UsuarioController {
@@ -11,22 +12,22 @@ export class UsuarioController {
     }
 
     @Get()
-    async getAllUsuarios() {
+    async getAllUsuarios(): Promise<UsuarioResponseDto[]> {
         return await this.usuarioService.getAllUsuarios();
     }
 
     @Get(':id')
-    async getAllUsuarioById(@Param('id') id: number) { 
+    async getAllUsuarioById(@Param('id') id: number): Promise<UsuarioResponseDto> { 
         return await this.usuarioService.getAllUsuarioById(id);
     }
 
     @Post()
-    async createUsuario(@Body() usuario: UsuarioRequestDto) {
+    async createUsuario(@Body() usuario: UsuarioRequestDto): Promise<UsuarioResponseDto> {
         return await this.usuarioService.createUsuario(usuario);
     }
 
     @Put(':id')
-    async updateUsuario(@Param('id') id: number, @Body() usuario: UsuarioRequestDto) {
+    async updateUsuario(@Param('id') id: number, @Body() usuario: UsuarioRequestDto): Promise<UsuarioResponseDto> {
         return await this.usuarioService.updateUsuario(id, usuario);
     }
 

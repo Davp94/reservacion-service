@@ -6,6 +6,8 @@ import { DatabaseModule } from './config/database/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { databaseConfig } from './config/database/database/database.config';
 import { entities } from './entity';
+import { CryptoModule } from './common/crypto/crypto.module';
+import { AuthModule } from './authentication/auth.module';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, TypeOrmModule.forRoot(
@@ -19,7 +21,7 @@ import { entities } from './entity';
       entities: entities,
       synchronize: true,
     }
-  )],
+  ), CryptoModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

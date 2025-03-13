@@ -5,11 +5,15 @@ import { Usuario } from 'src/entity/usuario.entity';
 import { Repository } from 'typeorm';
 import { UsuarioRequestDto } from '../dto/request/usuario.request.dto';
 import { UsuarioResponseDto } from '../dto/response/usuario.response.dto';
+import { CryptoService } from 'src/common/crypto/crypto.service';
 
 @Injectable()
 export class UsuarioService {
 
-    constructor(@InjectRepository(Usuario) private usuarioRepository: Repository<Usuario>) { }
+    constructor(
+        @InjectRepository(Usuario) private usuarioRepository: Repository<Usuario>,
+        private cryptoService: CryptoService
+    ) { }
 
     async getAllUsuarios(): Promise<UsuarioResponseDto[]> {
         const usuarioResponseDto: UsuarioResponseDto[] = [];
@@ -26,6 +30,7 @@ export class UsuarioService {
 
     async createUsuario(usuario: UsuarioRequestDto): Promise<UsuarioResponseDto>{
         const usuarioBuilded: Usuario = UsuarioRequestDto.buildToEntity(usuario);
+        usuarioBuilded.password = await this.cryptoService.encryptData(usuarioBuilded.password);
         return UsuarioResponseDto.buildFromEntity(await this.usuarioRepository.save(usuarioBuilded));
     }
 

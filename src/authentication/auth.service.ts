@@ -34,9 +34,9 @@ export class AuthService {
         //search user
         const usuario: Usuario = await this.usuarioRepository.findOne({where: {username: credentials.username}});
         if(usuario){ 
-            return usuario.password == await this.cryptoService.encryptData(credentials.password);
+            //return usuario.password == await this.cryptoService.encryptData(credentials.password);
+            return usuario.password == credentials.password;
         }
         return false;
     }
-
 }

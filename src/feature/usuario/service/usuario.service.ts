@@ -29,6 +29,9 @@ export class UsuarioService {
     }
 
     async createUsuario(usuario: UsuarioRequestDto): Promise<UsuarioResponseDto>{
+        if(!this.validateUser(usuario)){
+            throw new Error('Error validando el usuario')
+        }
         const usuarioBuilded: Usuario = UsuarioRequestDto.buildToEntity(usuario);
         usuarioBuilded.password = await this.cryptoService.encryptData(usuarioBuilded.password);
         return UsuarioResponseDto.buildFromEntity(await this.usuarioRepository.save(usuarioBuilded));
@@ -45,5 +48,15 @@ export class UsuarioService {
 
     async deleteUsuarioById(id: number): Promise<void> {
         this.usuarioRepository.delete(id);
+    }
+
+    async validateUser(userDataToValid: any): Promise<boolean>{
+        const isNotDuplicateEmail: boolean = await this.usuarioRepository.exists({where: userDataToValid.correo})
+        //valid unique username
+        const uniqueUsername: boolean = true;
+        //valid with external service
+        const externalServiceValidation: boolean = true;
+        // ...
+        return isNotDuplicateEmail && uniqueUsername && externalServiceValidation;
     }
 }

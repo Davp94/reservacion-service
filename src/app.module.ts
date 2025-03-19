@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsuarioModule } from './feature/usuario/usuario.module';
@@ -8,6 +8,7 @@ import { databaseConfig } from './config/database/database/database.config';
 import { entities } from './entity';
 import { CryptoModule } from './common/crypto/crypto.module';
 import { AuthModule } from './authentication/auth.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, TypeOrmModule.forRoot(
@@ -23,6 +24,12 @@ import { AuthModule } from './authentication/auth.module';
     }
   ), CryptoModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe
+    }
+  ],
 })
 export class AppModule {}

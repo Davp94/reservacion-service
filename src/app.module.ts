@@ -1,14 +1,16 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsuarioModule } from './feature/usuario/usuario.module';
 import { DatabaseModule } from './config/database/database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { databaseConfig } from './config/database/database/database.config';
 import { entities } from './entity';
 import { CryptoModule } from './common/crypto/crypto.module';
 import { AuthModule } from './authentication/auth.module';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { HttpExceptionFilter } from './exception/exception.filter';
+import { AuthMiddleware } from './common/auth/auth.middleware';
+import { UsuarioController } from './feature/usuario/controller/usuario.controller';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, TypeOrmModule.forRoot(
@@ -26,10 +28,14 @@ import { APP_PIPE } from '@nestjs/core';
   controllers: [AppController],
   providers: [
     AppService,
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe
-    }
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer){
+    consumer.apply(AuthMiddleware).forRoutes(
+      UsuarioController
+    )
+    //ADD OTHER MIDDLEWARE
+    //consumer.apply(AuthMiddleware).forRoutes()
+  }
+}

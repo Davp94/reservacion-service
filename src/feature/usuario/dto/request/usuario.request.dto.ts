@@ -1,26 +1,25 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, Matches } from "class-validator";
 import { Usuario } from "src/entity/usuario.entity";
-import { IsNull } from "typeorm";
 
 export class UsuarioRequestDto{
 
     @ApiProperty()
     @IsNotEmpty({message: 'No debe estar vacio'})
     @IsString({message: 'DEbe ser una cadena de textp'})
-    @Length(20, 50, {message: 'Debe tener una longitud entre {min} y {max} caracteres'})
+    @Length(10, 50, {message: 'Debe tener una longitud entre {min} y {max} caracteres'})
     nombres: string;
 
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    @Length(50)
+    @Length(20)
     apellidos: string;
 
     @ApiProperty()
     @IsNotEmpty()
     @IsString()
-    @Length(10)
+    @Length(5,10)
     username: string;
 
     @ApiProperty()

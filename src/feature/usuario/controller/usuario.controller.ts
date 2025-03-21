@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { UsuarioService } from '../service/usuario.service';
 import { UsuarioRequestDto } from '../dto/request/usuario.request.dto';
 import { UsuarioResponseDto } from '../dto/response/usuario.response.dto';

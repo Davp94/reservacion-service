@@ -5,7 +5,7 @@ import { createCipheriv, randomBytes, createHash, createDecipheriv } from 'crypt
 @Injectable()
 export class CryptoService {
     private algorithm = 'aes-256-ctr';
-    private public_key = 'dsadasdsafdscvsdcdscdscds';
+    private public_key = 'XCA/hK8sn+v+QN1rfRzzzmtSciCxRLgopgaStYbPtQk=';
     private iv = randomBytes(16);
 
     constructor(){}

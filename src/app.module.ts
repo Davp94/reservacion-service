@@ -11,9 +11,12 @@ import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { HttpExceptionFilter } from './exception/exception.filter';
 import { AuthMiddleware } from './common/auth/auth.middleware';
 import { UsuarioController } from './feature/usuario/controller/usuario.controller';
+import { EmpresaModule } from './feature/empresa/empresa.module';
+import { HorarioModule } from './feature/horario/horario.module';
+import { ReservacionModule } from './feature/reservacion/reservacion.module';
 
 @Module({
-  imports: [UsuarioModule, DatabaseModule, TypeOrmModule.forRoot(
+  imports: [UsuarioModule, DatabaseModule, EmpresaModule, TypeOrmModule.forRoot(
     {
       type: 'postgres',
       host: 'localhost',
@@ -24,7 +27,7 @@ import { UsuarioController } from './feature/usuario/controller/usuario.controll
       entities: entities,
       synchronize: true,
     }
-  ), CryptoModule, AuthModule],
+  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule],
   controllers: [AppController],
   providers: [
     AppService,

@@ -7,6 +7,9 @@ import { HorarioService } from 'src/feature/horario/service/horario.service';
 import { ReservacionRequestDto } from '../dto/reservacion.request.dto';
 import { Horario } from 'src/entity/horario.entity';
 import { Usuario } from 'src/entity/usuario.entity';
+import { PaginationFilterDto, PaginationFilterRequestDto } from 'src/common/dto/pagination-filter.request.dto';
+import { PaginationFilterResponseDto } from 'src/common/dto/pagination-filter.response.dto';
+import { OrderEnum } from 'src/constant/order.enum';
 
 @Injectable()
 export class ReservacionService {
@@ -35,6 +38,24 @@ export class ReservacionService {
     }
     return reservacionsResponseDto;
   }
+
+  async getReservacionesPagination(
+    paginationFilterRequestDto: PaginationFilterRequestDto
+  ): Promise<PaginationFilterResponseDto[]> {
+
+    //TODO COMPLETE PAGINATION
+    const order = {} // comentario : DESC
+    order[paginationFilterRequestDto.sortBy] = paginationFilterRequestDto.order;
+    //{'comentario'= 'DESC'}
+    const data = await this.reservacionRepository.findAndCount({
+      take: paginationFilterRequestDto.take,
+      order: order,
+      skip: paginationFilterRequestDto.page - 1 * paginationFilterRequestDto.take, //page = 5   4*10 = 40    
+    })
+
+    
+  }
+
 
   async createReservacion(
     reservacionRequest: ReservacionRequestDto,

@@ -4,7 +4,7 @@ import { Usuario } from "./usuario.entity";
 import { Empresa } from "./empresa.entity";
 import { Horario } from "./horario.entity";
 
-@Entity({ schema: 'administracion', name: 'horario'})
+@Entity({ schema: 'administracion', name: 'reservacion'})
 export class Reservacion{
 
     @PrimaryColumn({type: 'int4'})

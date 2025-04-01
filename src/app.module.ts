@@ -14,6 +14,7 @@ import { UsuarioController } from './feature/usuario/controller/usuario.controll
 import { EmpresaModule } from './feature/empresa/empresa.module';
 import { HorarioModule } from './feature/horario/horario.module';
 import { ReservacionModule } from './feature/reservacion/reservacion.module';
+import { FileModule } from './common/file/file.module';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, EmpresaModule, TypeOrmModule.forRoot(
@@ -23,11 +24,11 @@ import { ReservacionModule } from './feature/reservacion/reservacion.module';
       port: 5432,
       username: 'postgres',
       password: '123456',
-      database: 'reservacion2_db',
+      database: 'reservacion_db',
       entities: entities,
       synchronize: true,
     }
-  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule],
+  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule, FileModule],
   controllers: [AppController],
   providers: [
     AppService,

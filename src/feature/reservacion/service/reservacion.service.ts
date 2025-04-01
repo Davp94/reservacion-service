@@ -7,7 +7,7 @@ import { HorarioService } from 'src/feature/horario/service/horario.service';
 import { ReservacionRequestDto } from '../dto/reservacion.request.dto';
 import { Horario } from 'src/entity/horario.entity';
 import { Usuario } from 'src/entity/usuario.entity';
-import { PaginationFilterDto, PaginationFilterRequestDto } from 'src/common/dto/pagination-filter.request.dto';
+import { PaginationFilterRequestDto } from 'src/common/dto/pagination-filter.request.dto';
 import { PaginationFilterResponseDto } from 'src/common/dto/pagination-filter.response.dto';
 import { OrderEnum } from 'src/constant/order.enum';
 
@@ -41,19 +41,38 @@ export class ReservacionService {
 
   async getReservacionesPagination(
     paginationFilterRequestDto: PaginationFilterRequestDto
-  ): Promise<PaginationFilterResponseDto[]> {
-
+  ): Promise<PaginationFilterResponseDto<ReservacionResponseDto>> {
+    const reservacionsResponseDto: ReservacionResponseDto[] = [];
     //TODO COMPLETE PAGINATION
     const order = {} // comentario : DESC
     order[paginationFilterRequestDto.sortBy] = paginationFilterRequestDto.order;
+    //SINGLE FIELDS SOLUTION
+    //comentario = ASC => {comentario: ASC}
+    //MULTI FIELDS SOLUTION
+    //[{comentario: ASC}, {fecha: DESC}] => {comentario: ASC, fecha: DESC, ....}
     //{'comentario'= 'DESC'}
-    const data = await this.reservacionRepository.findAndCount({
+    const [items, total] = await this.reservacionRepository.findAndCount({
       take: paginationFilterRequestDto.take,
       order: order,
-      skip: paginationFilterRequestDto.page - 1 * paginationFilterRequestDto.take, //page = 5   4*10 = 40    
+      skip: (paginationFilterRequestDto.page - 1) * paginationFilterRequestDto.take, //page = 5   4*10 = 40    
     })
+    for (const reservacion of items) {
+      const reservacionResponse =
+        ReservacionResponseDto.buildFromEntity(reservacion);
+      reservacionResponse.horario = await this.horarioService.getHorarioById(
+        reservacion.horario.id,
+      );
+      reservacionsResponseDto.push(reservacionResponse);
+    }
 
-    
+
+    return {
+      content: reservacionsResponseDto,
+      totalItems: total,
+      page: paginationFilterRequestDto.page,
+      take: paginationFilterRequestDto.take,
+      totalPages: Math.ceil(total / paginationFilterRequestDto.take),
+    }
   }
 
 

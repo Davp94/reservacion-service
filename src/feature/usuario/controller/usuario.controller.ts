@@ -20,7 +20,7 @@ export class UsuarioController {
     }
 
     @Post()
-    async createUsuario(@Body() usuario: UsuarioRequestDto): Promise<UsuarioResponseDto> {
+    async createUsuario(@Body() usuario: UsuarioRequestDto, file: Express.Multer.File): Promise<UsuarioResponseDto> {
         return await this.usuarioService.createUsuario(usuario);
     }
 

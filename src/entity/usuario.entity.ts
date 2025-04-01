@@ -25,6 +25,9 @@ export class Usuario{
     @Column({type: 'smallint', nullable: true})
     estado: number;
 
+    @Column({type: 'varchar', nullable: true})
+    avatar: string;
+
     @ManyToOne(()=>Rol)
     rol: Rol;
 }

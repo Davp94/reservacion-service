@@ -6,12 +6,14 @@ import { Repository } from 'typeorm';
 import { UsuarioRequestDto } from '../dto/request/usuario.request.dto';
 import { UsuarioResponseDto } from '../dto/response/usuario.response.dto';
 import { CryptoService } from 'src/common/crypto/crypto.service';
+import { FileService } from 'src/common/file/file.service';
 
 @Injectable()
 export class UsuarioService {
   constructor(
     @InjectRepository(Usuario) private usuarioRepository: Repository<Usuario>,
     private cryptoService: CryptoService,
+    private fileService: FileService
   ) {}
 
   async getAllUsuarios(): Promise<UsuarioResponseDto[]> {
@@ -34,6 +36,8 @@ export class UsuarioService {
       if (!(await this.validateUser(usuario))) {
         throw new BadRequestException('Error validando el usuario');
       }
+      //create file
+      
       const usuarioBuilded: Usuario = UsuarioRequestDto.buildToEntity(usuario);
       usuarioBuilded.password = await this.cryptoService.encryptData(
         usuarioBuilded.password,

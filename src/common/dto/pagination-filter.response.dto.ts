@@ -1,5 +1,5 @@
-export class PaginationFilterResponseDto {
-    content: Object;
+export class PaginationFilterResponseDto<T> {
+    content: T[];
     
     totalItems: number;
 
@@ -7,7 +7,5 @@ export class PaginationFilterResponseDto {
 
     take: number;
 
-    totalPages: number;
-
-    
+    totalPages: number;  
 }

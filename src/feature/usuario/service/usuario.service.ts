@@ -31,17 +31,19 @@ export class UsuarioService {
     );
   }
 
-  async createUsuario(usuario: UsuarioRequestDto): Promise<UsuarioResponseDto> {
+  async createUsuario(usuario: UsuarioRequestDto, file: Express.Multer.File): Promise<UsuarioResponseDto> {
     try {
       if (!(await this.validateUser(usuario))) {
         throw new BadRequestException('Error validando el usuario');
       }
       //create file
-      
+      const filePath = await this.fileService.processFile(file);
+      console.log("🚀 ~ UsuarioService ~ createUsuario ~ filePath:", filePath)
       const usuarioBuilded: Usuario = UsuarioRequestDto.buildToEntity(usuario);
       usuarioBuilded.password = await this.cryptoService.encryptData(
         usuarioBuilded.password,
       );
+      usuarioBuilded.avatar = filePath;
       usuarioBuilded.id = (await this.usuarioRepository.count()) + 1;
       return UsuarioResponseDto.buildFromEntity(
         await this.usuarioRepository.save(usuarioBuilded),

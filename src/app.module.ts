@@ -15,6 +15,7 @@ import { EmpresaModule } from './feature/empresa/empresa.module';
 import { HorarioModule } from './feature/horario/horario.module';
 import { ReservacionModule } from './feature/reservacion/reservacion.module';
 import { FileModule } from './common/file/file.module';
+import { ReporteModule } from './feature/reporte/reporte.module';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, EmpresaModule, TypeOrmModule.forRoot(
@@ -28,7 +29,7 @@ import { FileModule } from './common/file/file.module';
       entities: entities,
       synchronize: true,
     }
-  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule, FileModule],
+  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule, FileModule, ReporteModule],
   controllers: [AppController],
   providers: [
     AppService,

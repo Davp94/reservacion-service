@@ -9,6 +9,7 @@ export class UsuarioResponseDto{
     nombreCompleto: string;
     correo: string;
     estado: number;
+    avatar: string;
 
     public static buildFromEntity(usuario: Usuario) {
         const usuarioResponseDto: UsuarioResponseDto = new UsuarioResponseDto();
@@ -19,6 +20,7 @@ export class UsuarioResponseDto{
         usuarioResponseDto.correo = usuario.correo;
         usuarioResponseDto.estado = usuario.estado;
         usuarioResponseDto.username = usuario.username;
+        usuarioResponseDto.avatar = usuario.avatar;
         return usuarioResponseDto;
     }
 }

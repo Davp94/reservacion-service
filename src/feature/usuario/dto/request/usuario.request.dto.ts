@@ -1,6 +1,7 @@
 import { PipesConsumer } from "@nestjs/core/pipes";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, Matches } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsEmail, IsNotEmpty, IsNumber, IsString, Length, Matches, Max, Min } from "class-validator";
 import { FileSizeValidationPipe } from "src/common/pipe/file-validation.pipe";
 import { Usuario } from "src/entity/usuario.entity";
 
@@ -41,10 +42,10 @@ export class UsuarioRequestDto{
 
     @ApiProperty()
     @IsNumber()
+    @Min(0)
+    @Max(1)
+    @Transform(({value})=> Number(value))
     estado: number;
-
-    //TODO add validation pipe as anotation
-    file: Express.Multer.File
 
     public static buildToEntity(usuarioRequestDto: UsuarioRequestDto) {
         const usuario: Usuario = new Usuario();

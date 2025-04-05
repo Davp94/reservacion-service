@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
+import { MiddlewareConsumer, Module, OnModuleInit, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsuarioModule } from './feature/usuario/usuario.module';
@@ -16,6 +16,7 @@ import { HorarioModule } from './feature/horario/horario.module';
 import { ReservacionModule } from './feature/reservacion/reservacion.module';
 import { FileModule } from './common/file/file.module';
 import { ReporteModule } from './feature/reporte/reporte.module';
+import { SeedModule } from './common/seed/seed.module';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, EmpresaModule, TypeOrmModule.forRoot(
@@ -29,13 +30,16 @@ import { ReporteModule } from './feature/reporte/reporte.module';
       entities: entities,
       synchronize: true,
     }
-  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule, FileModule, ReporteModule],
+  ), CryptoModule, AuthModule, HorarioModule, ReservacionModule, FileModule, ReporteModule, SeedModule],
   controllers: [AppController],
   providers: [
     AppService,
   ],
 })
-export class AppModule {
+export class AppModule implements OnModuleInit{
+  onModuleInit() {
+    console.log('ON MODULE INIT')
+  }
   configure(consumer: MiddlewareConsumer){
     consumer.apply(AuthMiddleware).forRoutes(
       UsuarioController

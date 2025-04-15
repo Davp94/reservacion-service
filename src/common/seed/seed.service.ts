@@ -36,6 +36,8 @@ export class SeedService implements OnModuleInit{
         //CREATE USUARIOS
         const usuarios = await this.usuarioFactory.createUsuarios(10);
         //CREATE EMPRESAS
+        const empresas = await this.empresaFactory.createEmpresas(10);
         //CREATE HORARIOS
+        const horarios = await this.horarioFactory.createHorarios(10);
     }
 }

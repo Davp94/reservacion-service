@@ -6,7 +6,7 @@ import { createCipheriv, randomBytes, createHash, createDecipheriv } from 'crypt
 export class CryptoService {
     private algorithm = 'aes-256-ctr';
     private public_key = 'XCA/hK8sn+v+QN1rfRzzzmtSciCxRLgopgaStYbPtQk=';
-    private iv = randomBytes(16);
+    private iv = 'fixed-iv-16-bytes';
 
     constructor(){}
 

@@ -13,10 +13,10 @@ export class Usuario{
     @Column({type: 'varchar', nullable: true})
     apellidos: string;
 
-    @Column({type: 'varchar', nullable: true, unique: true})
+    @Column({type: 'varchar', nullable: true})
     username: string;
 
-    @Column({type: 'varchar', nullable: true, unique: true})
+    @Column({type: 'varchar', nullable: true})
     password: string;
 
     @Column({type: 'varchar', nullable: true})

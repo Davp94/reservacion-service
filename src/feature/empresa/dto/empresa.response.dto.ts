@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsString } from "class-validator";
 import { Empresa } from "src/entity/empresa.entity";
 
 export class EmpresaResponseDto{
@@ -18,7 +19,7 @@ export class EmpresaResponseDto{
         empresaResponseDto.codigo_registro = empresa.codigo_registro;
         empresaResponseDto.nit = empresa.nit;
         empresaResponseDto.logo = empresa.logo;
-        empresaResponseDto.usuarioId = empresa.usuario.id;
+        //empresaResponseDto.usuarioId = empresa.usuario.id;
         return empresaResponseDto;
     }
 }

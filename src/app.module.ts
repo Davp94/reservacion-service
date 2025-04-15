@@ -17,6 +17,7 @@ import { ReservacionModule } from './feature/reservacion/reservacion.module';
 import { FileModule } from './common/file/file.module';
 import { ReporteModule } from './feature/reporte/reporte.module';
 import { SeedModule } from './common/seed/seed.module';
+import { SeedService } from './common/seed/seed.service';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, EmpresaModule, TypeOrmModule.forRoot(
@@ -37,8 +38,12 @@ import { SeedModule } from './common/seed/seed.module';
   ],
 })
 export class AppModule implements OnModuleInit{
-  onModuleInit() {
-    console.log('ON MODULE INIT')
+
+  constructor(private readonly seedService: SeedService){
+    
+  }
+  async onModuleInit() {
+    await this.seedService.seedData();
   }
   configure(consumer: MiddlewareConsumer){
     consumer.apply(AuthMiddleware).forRoutes(

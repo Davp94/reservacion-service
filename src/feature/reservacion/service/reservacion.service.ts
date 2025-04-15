@@ -42,7 +42,8 @@ export class ReservacionService {
   async getReservacionesPagination(
     paginationFilterRequestDto: PaginationFilterRequestDto
   ): Promise<PaginationFilterResponseDto<ReservacionResponseDto>> {
-    const reservacionsResponseDto: ReservacionResponseDto[] = [];
+    try {
+      const reservacionsResponseDto: ReservacionResponseDto[] = [];
     //TODO COMPLETE PAGINATION
     const order = {} // comentario : DESC
     order[paginationFilterRequestDto.sortBy] = paginationFilterRequestDto.order;
@@ -54,7 +55,8 @@ export class ReservacionService {
     const [items, total] = await this.reservacionRepository.findAndCount({
       take: paginationFilterRequestDto.take,
       order: order,
-      skip: (paginationFilterRequestDto.page - 1) * paginationFilterRequestDto.take, //page = 5   4*10 = 40    
+      skip: (paginationFilterRequestDto.page - 1) * paginationFilterRequestDto.take, //page = 5   4*10 = 40  
+      relations: {horario: {empresa: true}}  
     })
     for (const reservacion of items) {
       const reservacionResponse =
@@ -73,6 +75,11 @@ export class ReservacionService {
       take: paginationFilterRequestDto.take,
       totalPages: Math.ceil(total / paginationFilterRequestDto.take),
     }
+    } catch (error) {
+      console.log("🚀 ~ ReservacionService ~ error:", error)
+      throw error;
+    }
+    
   }
 
 

@@ -8,6 +8,7 @@ import { HorarioService } from '../horario/service/horario.service';
 @Module({
   controllers: [ReservacionController],
   providers: [ReservacionService, HorarioService],
-  imports: [TypeOrmModule.forFeature(entities)]
+  imports: [TypeOrmModule.forFeature(entities)],
+  exports: [ReservacionService]
 })
 export class ReservacionModule {}

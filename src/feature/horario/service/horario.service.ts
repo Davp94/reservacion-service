@@ -18,7 +18,7 @@ export class HorarioService {
     
       async getAllHorariosByEmpresa(id: number): Promise<HorarioResponseDto[]> {
         const horariosResponseDto: HorarioResponseDto[] = [];
-        const horarios: Horario[] = await this.horarioRepository.find({where: {empresa: {id: id}, estado: 2}, relations: { empresa: true }});
+        const horarios: Horario[] = await this.horarioRepository.find({where: {empresa: {id: id}}, relations: { empresa: true }});
         for (const horario of horarios) {
             horariosResponseDto.push(HorarioResponseDto.buildFromEntity(horario));
         }

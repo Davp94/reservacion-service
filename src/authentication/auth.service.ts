@@ -33,9 +33,9 @@ export class AuthService {
     async validateUsuario(credentials: AuthRequestDto): Promise<Boolean>{
         //search user
         const usuario: Usuario = await this.usuarioRepository.findOne({where: {username: credentials.username}});
+        console.log("🚀 ~ AuthService ~ validateUsuario ~ usuario:", usuario)
         if(usuario){ 
-            console.log("🚀 ~ AuthService ~ validateUsuario ~ usuario.password:", await this.cryptoService.decryptData(usuario.password))
-            console.log(credentials.password)
+            console.log("🚀 ~ AuthService ~ validateUsuario ~  await this.cryptoService.decryptData(usuario.password):",  await this.cryptoService.decryptData(usuario.password))
             return await this.cryptoService.decryptData(usuario.password) == credentials.password;
             //return usuario.password == credentials.password;
         }

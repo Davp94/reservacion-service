@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Max, Min } from "class-validator";
 import { OrderEnum } from "src/constant/order.enum";
 
@@ -7,14 +8,14 @@ export class PaginationFilterRequestDto {
   @ApiProperty()
   @IsOptional()
   @Min(1)
-  @IsNumber(null,{ message: 'Debe ser un numero' })
+  @IsNumber({}, {message: 'Numero no valido'})
   page?: number = 1;
 
   @ApiProperty()
   @IsOptional()
   @Min(1)
   @Max(100)
-  @IsNumber(null,{ message: 'Debe ser un numero' })
+  @IsNumber()
   take?: number = 10;
 
   @ApiProperty()

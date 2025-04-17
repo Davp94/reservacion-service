@@ -18,15 +18,16 @@ import { FileModule } from './common/file/file.module';
 import { ReporteModule } from './feature/reporte/reporte.module';
 import { SeedModule } from './common/seed/seed.module';
 import { SeedService } from './common/seed/seed.service';
+import { ReservacionGateway } from './feature/reservacion/gateway/reservacion.gateway';
 
 @Module({
   imports: [UsuarioModule, DatabaseModule, EmpresaModule, TypeOrmModule.forRoot(
     {
       type: 'postgres',
-      host: 'localhost',
+      host: 'dpg-d0050dc9c44c73ffn900-a',
       port: 5432,
-      username: 'postgres',
-      password: '123456',
+      username: 'postgree',
+      password: '123MrCSJucPvRJSTS3EIXgQmFpy4oXELh0j456',
       database: 'reservacion_db',
       entities: entities,
       synchronize: true,

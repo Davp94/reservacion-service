@@ -10,6 +10,7 @@ import { Usuario } from 'src/entity/usuario.entity';
 import { PaginationFilterRequestDto } from 'src/common/dto/pagination-filter.request.dto';
 import { PaginationFilterResponseDto } from 'src/common/dto/pagination-filter.response.dto';
 import { OrderEnum } from 'src/constant/order.enum';
+import { ReservacionGateway } from '../gateway/reservacion.gateway';
 
 @Injectable()
 export class ReservacionService {
@@ -18,6 +19,7 @@ export class ReservacionService {
     private reservacionRepository: Repository<Reservacion>,
     private horarioService: HorarioService,
     private entityManager: EntityManager,
+    private reservacionGateway: ReservacionGateway,
   ) {}
 
   async getAllReservacionByUsuario(
@@ -93,9 +95,11 @@ export class ReservacionService {
       reservacionToCreate.horario = horarioRetrieved;
       const usuarioRetrieved: Usuario = await this.entityManager.findOne(Usuario, {where: {id: reservacionRequest.usuarioId}});
       reservacionToCreate.usuario = usuarioRetrieved;
-      return ReservacionResponseDto.buildFromEntity(
+      const responseDto = ReservacionResponseDto.buildFromEntity(
         await this.reservacionRepository.save(reservacionToCreate),
       );
+      this.reservacionGateway.notificarReservacion(responseDto);
+      return responseDto;
     } catch (error) {
       throw new InternalServerErrorException('Error al crear la reservacion');
     }
